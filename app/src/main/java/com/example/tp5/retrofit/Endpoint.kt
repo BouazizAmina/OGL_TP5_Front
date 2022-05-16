@@ -12,10 +12,10 @@ interface Endpoint {
 
 
     @GET("parking/getall")
-    suspend fun getAllMovies(): Response<List<Parking>>
+    suspend fun getAllParkings(): Response<List<Parking>>
 
     @GET("parking/getbynom/{nom}")
-    suspend fun getMoviesByTitle(@Path("nom") title: String): Response<List<Parking>>
+    suspend fun getParkingByName(@Path("nom") title: String): Response<List<Parking>>
 
     companion object {
         @Volatile

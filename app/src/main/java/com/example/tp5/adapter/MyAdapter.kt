@@ -21,6 +21,10 @@ class MyAdapter(private val onItemClicked: (position: Int) -> Unit,val context: 
 
     var data = mutableListOf<Parking>()
     override fun getItemCount() = data.size
+    fun setParkings(parkings: List<Parking>) {
+        this.data = parkings.toMutableList()
+        notifyDataSetChanged()
+    }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
             holder.apply {

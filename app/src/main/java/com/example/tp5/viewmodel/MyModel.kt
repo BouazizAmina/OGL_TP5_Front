@@ -16,10 +16,10 @@ class MyModel: ViewModel() {
     }
 
 
-    fun loadMovies() {
+    fun loadParkings() {
         if(data.value==null) {
             CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
-                val response = Endpoint.createInstance().getAllMovies()
+                val response = Endpoint.createInstance().getAllParkings()
                 withContext(Dispatchers.Main) {
                     if (response.isSuccessful && response.body() != null) {
                         loading.value = false

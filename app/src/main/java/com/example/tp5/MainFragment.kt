@@ -5,7 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.os.bundleOf
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,6 +19,7 @@ import com.example.tp5.viewmodel.MyModel
 class mainFragment : Fragment() {
 
 //    private lateinit var binding : FragmentMainBinding
+    lateinit var adapter:MyAdapter
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -31,13 +34,34 @@ class mainFragment : Fragment() {
 
         val vm = ViewModelProvider(requireActivity()).get(MyModel::class.java)
         // Récupération de la liste modifé dans le premier fragment
-        val list = vm.data
+        val list = vm.loadParkings()
 
         val recyclerView = requireActivity().findViewById<RecyclerView>(R.id.recyclerView)
         val layoutManager = LinearLayoutManager(requireActivity(), RecyclerView.VERTICAL,false)
         recyclerView.layoutManager = layoutManager
         recyclerView.adapter = MyAdapter({position -> onClickDevice(position)},requireActivity())
+        vm.loading.observe(requireActivity(), Observer {  loading->
+            if(loading) {
+                //binding.progressBar.visibility = View.VISIBLE
+            }
+            else {
+                //binding.progressBar.visibility = View.GONE
+            }
 
+        })
+        // Error message observer
+        vm.errorMessage.observe(requireActivity(), Observer {  message ->
+            //Toast.makeText(requireContext(),"Une erreur s'est produite",Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(),message, Toast.LENGTH_SHORT).show()
+
+        })
+
+
+        // List movies observer
+        vm.data.observe(requireActivity(), Observer {  data ->
+            adapter.setParkings(data)
+
+        })
     }
 
     private fun onClickDevice(position: Int) {
