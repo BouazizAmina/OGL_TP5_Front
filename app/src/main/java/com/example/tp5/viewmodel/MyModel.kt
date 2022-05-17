@@ -1,5 +1,6 @@
 package com.example.tp5.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.tp5.retrofit.Endpoint
@@ -12,7 +13,8 @@ class MyModel: ViewModel() {
     val loading = MutableLiveData<Boolean>()
     val errorMessage = MutableLiveData<String>()
     val exceptionHandler = CoroutineExceptionHandler { coroutineContext, throwable ->
-        onError(throwable.localizedMessage)
+     //   onError(throwable.localizedMessage)
+        Log.v("errror4",throwable.message.toString())
     }
 
 
@@ -27,6 +29,7 @@ class MyModel: ViewModel() {
 
                     } else {
                         onError(response.message())
+
                     }
                 }
             }

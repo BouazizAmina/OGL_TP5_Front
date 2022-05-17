@@ -3,7 +3,7 @@ package com.example.tp5.entity
 import java.io.Serializable
 
 data class Parking(
-    val image: Int,
+    val image: String,
     val etat:String, val taux:Int,
     val nom:String,
     val commune:String,

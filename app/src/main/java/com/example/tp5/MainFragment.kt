@@ -35,12 +35,13 @@ class mainFragment : Fragment() {
 
         val vm = ViewModelProvider(requireActivity()).get(MyModel::class.java)
         // Récupération de la liste modifé dans le premier fragment
-        val list = vm.loadParkings()
+        vm.loadParkings()
 
         val recyclerView = requireActivity().findViewById<RecyclerView>(R.id.recyclerView)
         val layoutManager = LinearLayoutManager(requireActivity(), RecyclerView.VERTICAL,false)
         recyclerView.layoutManager = layoutManager
-        recyclerView.adapter = MyAdapter({position -> onClickDevice(position)},requireActivity())
+        adapter = MyAdapter({position -> onClickDevice(position)},requireActivity())
+        recyclerView.adapter = adapter
         vm.loading.observe(requireActivity(), Observer {  loading->
             if(loading) {
                 //binding.progressBar.visibility = View.VISIBLE

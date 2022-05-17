@@ -5,17 +5,19 @@ import com.example.tp5.entity.Parking
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.Path
 
 interface Endpoint {
 
 
-    @GET("parking/getall")
+    @GET("gestionParking/getAllParkings")
     suspend fun getAllParkings(): Response<List<Parking>>
 
-    @GET("parking/getbynom/{nom}")
-    suspend fun getParkingByName(@Path("nom") title: String): Response<List<Parking>>
+    @POST("gestionParking/getParkingByName")
+    suspend fun getParkingByName(@Body nom: String): Response<List<Parking>>
 
     companion object {
         @Volatile
